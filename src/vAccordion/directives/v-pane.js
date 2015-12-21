@@ -17,6 +17,11 @@ function vPaneDirective ($timeout, $animate, accordionConfig) {
       id: '@?'
     },
     link: function (scope, iElement, iAttrs, accordionCtrl, transclude) {
+      // ReadOnly variant of isExpanded Property, for use with function
+      // to avoid error “[$compile:nonassign]”, because function is not assignable
+      scope.$watch('isExpandedRo', function(n,o) {
+        scope.isExpanded = n;
+      })
 
       transclude(scope.$parent.$new(), function (clone, transclusionScope) {
         transclusionScope.$pane = scope.internalControl;
